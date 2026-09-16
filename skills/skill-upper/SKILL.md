@@ -120,6 +120,15 @@ Precedence (low → high): embedded empty defaults < user config < project `.ski
 - Copy `assets/case.yaml.tmpl` to `<skill-root>/evals/cases/<case-id>.yaml`.
 
 Adapt language per "Language Rules for Generated Artifacts". In an English context, it is **prohibited** to copy Chinese placeholder text from the templates into generated files — all prose must be rewritten in English. The Chinese in the templates is for structural reference only, not to be carried over.
+#### MCP case generation
+
+When the target eval includes MCP servers, generate cases in three separate tracks. Keep connectivity cases separate from effectiveness scoring:
+
+1. **Connectivity cases**: inspect every discovered tool's `name`, `description`, `inputSchema`, required fields, enum values, return shape, permissions, timeout behavior, and error codes. Generate and run a minimal legal call for each tool. Verify discovery, argument encoding, parseable success responses, empty results, errors, and timeouts. Label these cases `tag: connectivity`; do not include them in the product-effectiveness pass-rate denominator.
+2. **Normal task cases**: derive realistic user goals from the schema and server description. Cover complete required arguments, legal enum values, type/range/date constraints, nested objects and arrays, cross-field dependencies, and verifiable expected results. Schema validity alone is insufficient: use fixtures or documented test data for expected business outcomes.
+3. **Trap and negative cases**: include tasks that should not call a tool, ambiguous requests among similar tools, schema-valid but business-invalid inputs, missing or contradictory information requiring clarification, permission denial, empty results, timeout, pagination, partial fields, server errors, and conflicts between tool output and user-provided facts. Assert the correct recovery or refusal, not merely an error string.
+
+Use a balanced set by default: 20% connectivity, 40% normal, 40% trap/negative. For MCP-vs-no-MCP comparisons, run the same effectiveness cases in both configurations. Do not require a tool call in the no-MCP arm; score the final task outcome separately from tool selection and unnecessary-call diagnostics.
 Preserve short field-leading comments in generated YAML. In Chinese context, rewrite those comments into Chinese while keeping field names and enum values in English.
 
 Selection guidelines:
@@ -240,3 +249,4 @@ Full flags: `references/cli.md`.
 - `references/cli.md`
 - `references/migrate-anthropic.md`
 - `assets/eval.yaml.tmpl`, `assets/case.yaml.tmpl`
+
