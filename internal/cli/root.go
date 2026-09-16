@@ -173,6 +173,7 @@ func init() {
 
 	rootCmd.AddCommand(runCmd)
 	rootCmd.AddCommand(validateCmd)
+	rootCmd.AddCommand(newSecurityCommand())
 	rootCmd.AddCommand(listCasesCmd)
 	rootCmd.AddCommand(reportCmd)
 	rootCmd.AddCommand(debugCmd)

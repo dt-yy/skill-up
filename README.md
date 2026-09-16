@@ -334,3 +334,9 @@ directory map and architectural responsibilities.
 ## License
 
 Apache License 2.0 — see [LICENSE](LICENSE).
+
+## Security scanning
+
+Use `skill-up security ./my-skill --format json --output security-report.json`
+with a separately installed NVIDIA SkillSpector. Static analysis is the default;
+findings and incomplete scans fail the command. See [setup and options](docs/guide/security.md).

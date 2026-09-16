@@ -199,3 +199,7 @@ action 的 release tag**(从引入 action 的那个 release 起)或 commit SHA;`
 ## 许可证
 
 Apache License 2.0 — 详见 [LICENSE](LICENSE)。
+
+## 安全检查
+
+安装 NVIDIA SkillSpector 后，可运行 `skill-up security ./my-skill --format json --output security-report.json`。默认静态分析，发现风险或扫描不完整时返回非零退出码。支持通过 `--skillspector-bin` 指定本地安装路径，详见[安装和参数说明](docs/guide/security.md)。
